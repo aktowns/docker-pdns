@@ -15,6 +15,9 @@ jobs:
       - name: Check Out Repo
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
       - name: Set up Docker Buildx
         id: buildx
         uses: docker/setup-buildx-action@v1
@@ -24,6 +27,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pdns-recursor
+          platforms: linux/amd64,linux/arm64
           file: ./pdns-recursor/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
@@ -37,6 +41,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pdns-recursor
+          platforms: linux/amd64,linux/arm64
           file: ./pdns-recursor/Dockerfile.alpine
           builder: ${{ steps.buildx.outputs.name }}
           push: false
@@ -50,6 +55,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pdns
+          platforms: linux/amd64,linux/arm64
           file: ./pdns/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
@@ -60,6 +66,7 @@ jobs:
 
       - name: Build PDNS alpine
         id: docker_build_pdns_alpine
+        platforms: linux/amd64,linux/arm64
         uses: docker/build-push-action@v2
         with:
           context: ./pdns
@@ -76,6 +83,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pdns-admin-base-ngoduykhanh
+          platforms: linux/amd64,linux/arm64
           file: ./pdns-admin-base-ngoduykhanh/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
@@ -91,6 +99,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pdns-admin-uwsgi-ngoduykhanh
+          platforms: linux/amd64,linux/arm64
           file: ./pdns-admin-uwsgi-ngoduykhanh/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
@@ -106,6 +115,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./pdns-admin-static-ngoduykhanh
+          platforms: linux/amd64,linux/arm64
           file: ./pdns-admin-static-ngoduykhanh/Dockerfile
           builder: ${{ steps.buildx.outputs.name }}
           push: false
